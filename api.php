@@ -1,6 +1,5 @@
 <?php 
 	$token = "227d3e9787e8bbccc51542d944a600fa691556420cc304863375feee6a15de0c";
-	$headers = getallheaders() ;
 
 	header('Content-Type: application/json');
 	
@@ -34,11 +33,11 @@
 
 		$arr = array('sucesso' => true, 'erro' => "");
 
-		if(isset($headers['Authorization'])){
+		if(isset($_REQUEST['token'])){
 		    
 		    $autorization = split(" ", $headers['Authorization']);
 
-		    if($autorization[0] !== "Bearer" && $autorization[1] !== $token){
+		    if($_REQUEST['token'] !== $token){
 		    	$arr["sucesso"] = false;
 	     		$arr["erro"] = "Token expirado ou não enviado, efetue o login novamente";
 	     		$arr["data"] = [];
@@ -94,19 +93,5 @@
 
 	}
 
-	if (!function_exists('getallheaders')) 
-	{ 
-	    function getallheaders() 
-	    { 
-	       $headers = array (); 
-	       foreach ($_SERVER as $name => $value) 
-	       { 
-	           if (substr($name, 0, 5) == 'HTTP_') 
-	           { 
-	               $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
-	           } 
-	       } 
-	       return $headers; 
-	    } 
-	} 
+	
  ?>
